@@ -5,10 +5,16 @@ package employee;
 option go_package = ".;employeepb";
  
 message Employee {
-    string id = 1;
-    string name = 2;
-    string department = 3;
-    int32 salary = 4;
+    string ID = 1;
+    string Name = 2;
+    string Designation = 3;
+    string Department = 4;
+    string JoiningDate = 5;
+    string Address = 6;
+    string OfficeLocation = 7;
+    string Status = 8;
+    string EmailID = 9;
+    string PhoneNumber = 10;
 }
  
 message CreateEmployeeRequest {
