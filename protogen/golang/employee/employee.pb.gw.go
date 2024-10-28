@@ -35,7 +35,7 @@ func request_EmployeeService_CreateEmployee_0(ctx context.Context, marshaler run
 	var protoReq CreateEmployeeRequest
 	var metadata runtime.ServerMetadata
 
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq.Employee); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -48,7 +48,7 @@ func local_request_EmployeeService_CreateEmployee_0(ctx context.Context, marshal
 	var protoReq CreateEmployeeRequest
 	var metadata runtime.ServerMetadata
 
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq.Employee); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -61,8 +61,21 @@ func request_EmployeeService_GetEmployee_0(ctx context.Context, marshaler runtim
 	var protoReq GetEmployeeRequest
 	var metadata runtime.ServerMetadata
 
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	msg, err := client.GetEmployee(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -74,8 +87,21 @@ func local_request_EmployeeService_GetEmployee_0(ctx context.Context, marshaler 
 	var protoReq GetEmployeeRequest
 	var metadata runtime.ServerMetadata
 
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	msg, err := server.GetEmployee(ctx, &protoReq)
@@ -86,10 +112,6 @@ func local_request_EmployeeService_GetEmployee_0(ctx context.Context, marshaler 
 func request_EmployeeService_GetAllEmployees_0(ctx context.Context, marshaler runtime.Marshaler, client EmployeeServiceClient, req *http.Request, pathParams map[string]string) (EmployeeService_GetAllEmployeesClient, runtime.ServerMetadata, error) {
 	var protoReq GetAllEmployeesRequest
 	var metadata runtime.ServerMetadata
-
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
 
 	stream, err := client.GetAllEmployees(ctx, &protoReq)
 	if err != nil {
@@ -108,8 +130,25 @@ func request_EmployeeService_UpdateEmployee_0(ctx context.Context, marshaler run
 	var protoReq UpdateEmployeeRequest
 	var metadata runtime.ServerMetadata
 
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq.Employee); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["employee.ID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employee.ID")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "employee.ID", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employee.ID", err)
 	}
 
 	msg, err := client.UpdateEmployee(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -121,8 +160,25 @@ func local_request_EmployeeService_UpdateEmployee_0(ctx context.Context, marshal
 	var protoReq UpdateEmployeeRequest
 	var metadata runtime.ServerMetadata
 
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq.Employee); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["employee.ID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employee.ID")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "employee.ID", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employee.ID", err)
 	}
 
 	msg, err := server.UpdateEmployee(ctx, &protoReq)
@@ -134,8 +190,21 @@ func request_EmployeeService_DeleteEmployee_0(ctx context.Context, marshaler run
 	var protoReq DeleteEmployeeRequest
 	var metadata runtime.ServerMetadata
 
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	msg, err := client.DeleteEmployee(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -147,8 +216,21 @@ func local_request_EmployeeService_DeleteEmployee_0(ctx context.Context, marshal
 	var protoReq DeleteEmployeeRequest
 	var metadata runtime.ServerMetadata
 
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	msg, err := server.DeleteEmployee(ctx, &protoReq)
@@ -171,7 +253,7 @@ func RegisterEmployeeServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.EmployeeService/CreateEmployee", runtime.WithHTTPPathPattern("/employee.EmployeeService/CreateEmployee"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.EmployeeService/CreateEmployee", runtime.WithHTTPPathPattern("/v1/employees"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -188,7 +270,7 @@ func RegisterEmployeeServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_EmployeeService_GetEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_EmployeeService_GetEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -196,7 +278,7 @@ func RegisterEmployeeServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.EmployeeService/GetEmployee", runtime.WithHTTPPathPattern("/employee.EmployeeService/GetEmployee"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.EmployeeService/GetEmployee", runtime.WithHTTPPathPattern("/v1/employees/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -213,14 +295,14 @@ func RegisterEmployeeServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_EmployeeService_GetAllEmployees_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_EmployeeService_GetAllEmployees_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
 		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 		return
 	})
 
-	mux.Handle("POST", pattern_EmployeeService_UpdateEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_EmployeeService_UpdateEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -228,7 +310,7 @@ func RegisterEmployeeServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.EmployeeService/UpdateEmployee", runtime.WithHTTPPathPattern("/employee.EmployeeService/UpdateEmployee"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.EmployeeService/UpdateEmployee", runtime.WithHTTPPathPattern("/v1/employees/{employee.ID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -245,7 +327,7 @@ func RegisterEmployeeServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_EmployeeService_DeleteEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_EmployeeService_DeleteEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -253,7 +335,7 @@ func RegisterEmployeeServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.EmployeeService/DeleteEmployee", runtime.WithHTTPPathPattern("/employee.EmployeeService/DeleteEmployee"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.EmployeeService/DeleteEmployee", runtime.WithHTTPPathPattern("/v1/employees/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -317,7 +399,7 @@ func RegisterEmployeeServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/employee.EmployeeService/CreateEmployee", runtime.WithHTTPPathPattern("/employee.EmployeeService/CreateEmployee"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/employee.EmployeeService/CreateEmployee", runtime.WithHTTPPathPattern("/v1/employees"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -333,13 +415,13 @@ func RegisterEmployeeServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_EmployeeService_GetEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_EmployeeService_GetEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/employee.EmployeeService/GetEmployee", runtime.WithHTTPPathPattern("/employee.EmployeeService/GetEmployee"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/employee.EmployeeService/GetEmployee", runtime.WithHTTPPathPattern("/v1/employees/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -355,13 +437,13 @@ func RegisterEmployeeServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_EmployeeService_GetAllEmployees_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_EmployeeService_GetAllEmployees_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/employee.EmployeeService/GetAllEmployees", runtime.WithHTTPPathPattern("/employee.EmployeeService/GetAllEmployees"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/employee.EmployeeService/GetAllEmployees", runtime.WithHTTPPathPattern("/v1/employees"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -377,13 +459,13 @@ func RegisterEmployeeServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_EmployeeService_UpdateEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_EmployeeService_UpdateEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/employee.EmployeeService/UpdateEmployee", runtime.WithHTTPPathPattern("/employee.EmployeeService/UpdateEmployee"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/employee.EmployeeService/UpdateEmployee", runtime.WithHTTPPathPattern("/v1/employees/{employee.ID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -399,13 +481,13 @@ func RegisterEmployeeServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_EmployeeService_DeleteEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_EmployeeService_DeleteEmployee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/employee.EmployeeService/DeleteEmployee", runtime.WithHTTPPathPattern("/employee.EmployeeService/DeleteEmployee"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/employee.EmployeeService/DeleteEmployee", runtime.WithHTTPPathPattern("/v1/employees/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -425,15 +507,15 @@ func RegisterEmployeeServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_EmployeeService_CreateEmployee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"employee.EmployeeService", "CreateEmployee"}, ""))
+	pattern_EmployeeService_CreateEmployee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employees"}, ""))
 
-	pattern_EmployeeService_GetEmployee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"employee.EmployeeService", "GetEmployee"}, ""))
+	pattern_EmployeeService_GetEmployee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "employees", "id"}, ""))
 
-	pattern_EmployeeService_GetAllEmployees_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"employee.EmployeeService", "GetAllEmployees"}, ""))
+	pattern_EmployeeService_GetAllEmployees_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employees"}, ""))
 
-	pattern_EmployeeService_UpdateEmployee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"employee.EmployeeService", "UpdateEmployee"}, ""))
+	pattern_EmployeeService_UpdateEmployee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "employees", "employee.ID"}, ""))
 
-	pattern_EmployeeService_DeleteEmployee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"employee.EmployeeService", "DeleteEmployee"}, ""))
+	pattern_EmployeeService_DeleteEmployee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "employees", "id"}, ""))
 )
 
 var (

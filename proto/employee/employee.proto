@@ -2,6 +2,8 @@ syntax = "proto3";
  
 package employee;
  
+import "google/api/annotations.proto";
+
 option go_package = ".;employeepb";
  
 message Employee {
@@ -56,9 +58,35 @@ message GetAllEmployeesResponse {
 }
  
 service EmployeeService {
-    rpc CreateEmployee(CreateEmployeeRequest) returns (CreateEmployeeResponse);
-    rpc GetEmployee(GetEmployeeRequest) returns (GetEmployeeResponse);
-    rpc GetAllEmployees(GetAllEmployeesRequest) returns (stream GetAllEmployeesResponse);
-    rpc UpdateEmployee(UpdateEmployeeRequest) returns (UpdateEmployeeResponse);
-    rpc DeleteEmployee(DeleteEmployeeRequest) returns (DeleteEmployeeResponse);
+    rpc CreateEmployee(CreateEmployeeRequest) returns (CreateEmployeeResponse) {
+        option (google.api.http) = {
+            post: "/v1/employees"
+            body: "employee"
+        };
+    }
+
+    rpc GetEmployee(GetEmployeeRequest) returns (GetEmployeeResponse) {
+        option (google.api.http) = {
+            get: "/v1/employees/{id}"
+        };
+    }
+
+    rpc GetAllEmployees(GetAllEmployeesRequest) returns (stream GetAllEmployeesResponse) {
+        option (google.api.http) = {
+            get: "/v1/employees"
+        };
+    }
+
+    rpc UpdateEmployee(UpdateEmployeeRequest) returns (UpdateEmployeeResponse) {
+        option (google.api.http) = {
+            put: "/v1/employees/{employee.ID}"
+            body: "employee"
+        };
+    }
+
+    rpc DeleteEmployee(DeleteEmployeeRequest) returns (DeleteEmployeeResponse) {
+        option (google.api.http) = {
+            delete: "/v1/employees/{id}"
+        };
+    }
 }
